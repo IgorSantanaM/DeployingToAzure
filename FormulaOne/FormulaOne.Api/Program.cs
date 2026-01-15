@@ -58,7 +58,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "Ocorreu um erro ao aplicar as migrações do banco de dados.");
+        logger.LogError(ex, "An error occurred while trying to apply the migrations to the Database.");
     }
 }
 

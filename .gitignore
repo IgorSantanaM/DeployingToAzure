@@ -482,3 +482,43 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+
+# Local .terraform directories (plugin caches, providers, modules)
+**/.terraform/*
+.terraform.lock.hcl
+
+# Terraform state files (NEVER commit these)
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Variable files that may contain secrets
+*.tfvars
+*.tfvars.json
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI configuration files
+.terraformrc
+terraform.rc
+
+# Plan output files
+*.tfplan
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
