@@ -46,6 +46,22 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using (var scope = app.Services.CreateScope())
+{
+    var service = scope.ServiceProvider;
+    var logger = service.GetRequiredService<ILogger<Program>>();
+
+    try
+    {
+        var context = service.GetRequiredService<AppDbContext>();
+        await context.Database.MigrateAsync();
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Ocorreu um erro ao aplicar as migrações do banco de dados.");
+    }
+}
+
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
