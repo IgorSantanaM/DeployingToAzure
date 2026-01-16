@@ -41,6 +41,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+using(var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<DbContext>();;
+    context.Database.Migrate();
+}
+
 
 app.UseAuthorization();
 
