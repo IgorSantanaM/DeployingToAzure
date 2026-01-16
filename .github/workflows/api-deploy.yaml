@@ -38,6 +38,6 @@ jobs:
                 ACR_REGISTRY: ${{vars.ACR_SERVER}}
                 IMAGE_TAG: ${{steps.vars.outputs.short_sha}}
             run: |
-                docker build -f FormulaOne/FormulaOne.Dockerfile -t $ACR_REGISTRY/f1app:$IMAGE_TAG -t $ACR_REGISTRY/f1app:latest .
+                docker build -f FormulaOne.Dockerfile -t $ACR_REGISTRY/f1app:$IMAGE_TAG -t $ACR_REGISTRY/f1app:latest .
                 docker push $ACR_REGISTRY/f1app --all-tags
 
