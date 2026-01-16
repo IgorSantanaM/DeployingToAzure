@@ -1,6 +1,6 @@
 resource "azurerm_container_registry" "acr" {
   location            = azurerm_resource_group.myf1rg.location
-  name                = "f1registry${var.env_id}"
+  name                = "f1registry${var.env_id}${azurerm_resource_group.myf1rg.location}v4"
   resource_group_name = azurerm_resource_group.myf1rg.name
   sku                 = "Standard"
   admin_enabled       = true 

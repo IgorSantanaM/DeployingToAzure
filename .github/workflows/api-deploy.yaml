@@ -1,0 +1,43 @@
+name: Build and Deploy API To Azure
+
+# Controls when the action will run 
+on:
+    push:
+        branches:
+            - main
+
+# The workfow of the Action
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+    
+        steps:
+        -   name: Checkout Repository
+            id: github
+            uses: actions/checkout@v2
+        -   name: Setupe Webapi .NET
+            uses: actions/setup-dotnet@v2
+            with:
+                dotnet-version: '8.0.x'
+
+        -   name: Configure Azure ACR
+            uses: azure/docker-login@v2
+            with:
+                login-server: ${{vars.ACR_SERVER}}
+                username: ${{secrets.ACR_USERNAME}}
+                password: ${{secrets.ACR_PASSWORD}}
+
+        -   name: SHA of the commit
+            id: vars
+            run: |
+                calculatedSHA=$(git rev-parse --short ${{github.sha}})
+                echo "::set-output name=short_sha::$calculatedSHA"
+
+        -   name: Build and push Docker image to ACR
+            env: 
+                ACR_REGISTRY: ${{vars.ACR_SERVER}}
+                IMAGE_TAG: ${{steps.vars.outputs.short_sha}}
+            run: |
+                docker build -f FormulaOne/FormulaOne.Dockerfile -t $ACR_REGISTRY/f1app:$IMAGE_TAG -t $ACR_REGISTRY/f1app:latest .
+                docker push $ACR_REGISTRY/f1app --all-tags
+
