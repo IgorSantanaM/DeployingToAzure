@@ -25,7 +25,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddHealthChecks() 
     .AddSqlite(
-        mssqlConn,
+        mssqlConn!,
         "SELECT 1",
         name: "Db Check",
         failureStatus: HealthStatus.Unhealthy,
